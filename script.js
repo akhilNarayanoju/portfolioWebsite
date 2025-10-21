@@ -120,16 +120,266 @@ skillCards.forEach((card, index) => {
 });
 
 // ===================================
-// Project Cards Hover Effect
+// Project Carousel - Enhanced Functionality
 // ===================================
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.zIndex = '10';
+class ProjectCarousel {
+    constructor() {
+        this.currentIndex = 0;
+        this.totalProjects = 4;
+
+        // Elements
+        this.track = document.querySelector('.carousel-track');
+        this.cards = document.querySelectorAll('.modern-project-card');
+        this.tabs = document.querySelectorAll('.project-tab');
+        this.prevBtn = document.getElementById('prevProject');
+        this.nextBtn = document.getElementById('nextProject');
+        this.progressCurrent = document.querySelector('.progress-current');
+        this.progressFill = document.querySelector('.progress-fill');
+
+        this.init();
+    }
+
+    init() {
+        // Tab click handlers
+        this.tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        // Arrow button handlers
+        this.prevBtn.addEventListener('click', () => this.prevSlide());
+        this.nextBtn.addEventListener('click', () => this.nextSlide());
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') this.prevSlide();
+            if (e.key === 'ArrowRight') this.nextSlide();
+        });
+
+        // Touch/Swipe support
+        this.addSwipeSupport();
+
+        // Enhanced card interactions
+        this.addCardInteractions();
+
+        // Update initial state
+        this.updateCarousel();
+    }
+
+    goToSlide(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+    }
+
+    nextSlide() {
+        this.currentIndex = (this.currentIndex + 1) % this.totalProjects;
+        this.updateCarousel();
+    }
+
+    prevSlide() {
+        this.currentIndex = (this.currentIndex - 1 + this.totalProjects) % this.totalProjects;
+        this.updateCarousel();
+    }
+
+    updateCarousel() {
+        // Update track position
+        const offset = -this.currentIndex * 100;
+        this.track.style.transform = `translateX(${offset}%)`;
+
+        // Update active card
+        this.cards.forEach((card, index) => {
+            card.classList.toggle('active', index === this.currentIndex);
+        });
+
+        // Update active tab
+        this.tabs.forEach((tab, index) => {
+            tab.classList.toggle('active', index === this.currentIndex);
+        });
+
+        // Update progress
+        const progressPercent = ((this.currentIndex + 1) / this.totalProjects) * 100;
+        this.progressFill.style.width = `${progressPercent}%`;
+        this.progressCurrent.textContent = (this.currentIndex + 1).toString().padStart(2, '0');
+
+        // Animate number counter
+        this.animateProjectNumber();
+    }
+
+    animateProjectNumber() {
+        const activeCard = this.cards[this.currentIndex];
+        const numberEl = activeCard.querySelector('.project-number');
+        const targetValue = this.currentIndex + 1;
+
+        numberEl.style.opacity = '0';
+        setTimeout(() => {
+            numberEl.textContent = targetValue.toString().padStart(2, '0');
+            numberEl.style.opacity = '0.08';
+        }, 300);
+    }
+
+    addSwipeSupport() {
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        const carousel = document.querySelector('.projects-carousel');
+
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+
+        carousel.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+        });
+
+        carousel.addEventListener('touchend', () => {
+            if (!isDragging) return;
+
+            const diff = startX - currentX;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    this.nextSlide();
+                } else {
+                    this.prevSlide();
+                }
+            }
+
+            isDragging = false;
+        });
+
+        // Mouse drag support
+        carousel.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = true;
+            carousel.style.cursor = 'grabbing';
+        });
+
+        carousel.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX;
+        });
+
+        carousel.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+
+            const diff = startX - currentX;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    this.nextSlide();
+                } else {
+                    this.prevSlide();
+                }
+            }
+
+            isDragging = false;
+            carousel.style.cursor = 'grab';
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            isDragging = false;
+            carousel.style.cursor = 'default';
+        });
+    }
+
+    addCardInteractions() {
+        this.cards.forEach((card) => {
+            // 3D tilt effect on active card only
+            card.addEventListener('mousemove', (e) => {
+                if (!card.classList.contains('active')) return;
+
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 30;
+                const rotateY = (centerX - x) / 30;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (!card.classList.contains('active')) return;
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+
+            // Glow follows mouse
+            const glow = card.querySelector('.project-glow');
+            if (glow) {
+                card.addEventListener('mousemove', (e) => {
+                    if (!card.classList.contains('active')) return;
+
+                    const rect = card.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+                    glow.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(139, 92, 246, 0.4) 0%, transparent 50%)`;
+                });
+            }
+        });
+    }
+}
+
+// Initialize carousel when DOM is ready
+let projectCarousel;
+if (document.querySelector('.projects-carousel')) {
+    projectCarousel = new ProjectCarousel();
+}
+
+// Enhanced tech badge animations
+const techBadges = document.querySelectorAll('.tech-badge');
+techBadges.forEach((badge, index) => {
+    badge.style.animationDelay = `${index * 0.05}s`;
+
+    badge.addEventListener('mouseenter', function() {
+        // Create ripple effect
+        const ripple = document.createElement('span');
+        ripple.style.cssText = `
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: badgeRipple 0.6s ease-out;
+            pointer-events: none;
+        `;
+        this.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 600);
+    });
+});
+
+// Add ripple animation
+const badgeRippleStyle = document.createElement('style');
+badgeRippleStyle.textContent = `
+    @keyframes badgeRipple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(badgeRippleStyle);
+
+// Project link hover effect with magnetic attraction
+const projectLinks = document.querySelectorAll('.project-link');
+projectLinks.forEach(link => {
+    link.addEventListener('mousemove', (e) => {
+        const rect = link.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        link.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
     });
 
-    card.addEventListener('mouseleave', function() {
-        this.style.zIndex = '1';
+    link.addEventListener('mouseleave', () => {
+        link.style.transform = 'translate(0, 0)';
     });
 });
 
@@ -652,27 +902,30 @@ document.querySelectorAll('.skill-card').forEach(card => {
 });
 
 // ===================================
-// Project Card Tilt Effect
+// Legacy Project Card Support (if any old cards exist)
 // ===================================
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+const legacyProjectCards = document.querySelectorAll('.project-card');
+if (legacyProjectCards.length > 0) {
+    legacyProjectCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
 
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+        });
     });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
-    });
-});
+}
 
 // ===================================
 // Floating Animation for Hero Image

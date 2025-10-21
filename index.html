@@ -157,82 +157,193 @@
     <section id="projects" class="projects section">
         <div class="container">
             <h2 class="section-title animate-on-scroll">Featured Projects</h2>
-            <div class="projects-grid animate-on-scroll">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project1.jpg" alt="ScaleFluidly CPQ Platform">
-                        <div class="project-overlay">
-                            <a href="https://scalefluidly.com" target="_blank" class="btn btn-primary">View Live</a>
+            <p class="section-subtitle animate-on-scroll">A showcase of my recent work and technical expertise</p>
+
+            <!-- Project Tabs Navigation -->
+            <div class="project-tabs">
+                <button class="project-tab active" data-index="0">
+                    <span class="tab-number">01</span>
+                    <span class="tab-name">CPQ Platform</span>
+                </button>
+                <button class="project-tab" data-index="1">
+                    <span class="tab-number">02</span>
+                    <span class="tab-name">Employee Mgmt</span>
+                </button>
+                <button class="project-tab" data-index="2">
+                    <span class="tab-number">03</span>
+                    <span class="tab-name">Forms Framework</span>
+                </button>
+                <button class="project-tab" data-index="3">
+                    <span class="tab-number">04</span>
+                    <span class="tab-name">UI Architecture</span>
+                </button>
+                <div class="tab-indicator"></div>
+            </div>
+
+            <!-- Project Carousel Container -->
+            <div class="project-carousel-wrapper">
+                <!-- Left Arrow -->
+                <button class="carousel-arrow carousel-arrow-left" id="prevProject">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <!-- Projects Carousel -->
+                <div class="projects-carousel">
+                    <div class="carousel-track">
+                        <!-- Project 1 -->
+                        <div class="modern-project-card active" data-project="0">
+                            <div class="project-number">01</div>
+                            <div class="project-visual">
+                                <div class="project-image-wrapper">
+                                    <img src="project1.jpg" alt="ScaleFluidly CPQ Platform">
+                                    <div class="image-overlay"></div>
+                                </div>
+                                <div class="project-glow"></div>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-header">
+                                    <h3 class="project-title">ScaleFluidly CPQ Platform</h3>
+                                    <div class="project-type">Enterprise Application</div>
+                                </div>
+                                <p class="project-description">
+                                    A comprehensive Configure Price Quote platform integrating product management, pricing structures,
+                                    rules engine, and approval workflows. Engineered to streamline the entire quote-to-order process
+                                    for enterprise businesses.
+                                </p>
+                                <div class="project-tech-stack">
+                                    <span class="tech-badge">Angular</span>
+                                    <span class="tech-badge">TypeScript</span>
+                                    <span class="tech-badge">Bootstrap</span>
+                                    <span class="tech-badge">REST APIs</span>
+                                </div>
+                                <div class="project-actions">
+                                    <a href="https://scalefluidly.com" target="_blank" class="project-link">
+                                        <span>View Live</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>ScaleFluidly - CPQ Platform</h3>
-                        <p>A comprehensive Configure Price Quote platform integrating product management, pricing structures, rules engine, categories, object manager, account/contact management, order processing, contract lifecycle management, and approval workflows. Similar to Conga CPQ, enabling businesses to efficiently manage their entire quote-to-order process.</p>
-                        <div class="project-tags">
-                            <span class="tag">Angular</span>
-                            <span class="tag">TypeScript</span>
-                            <span class="tag">Bootstrap</span>
-                            <span class="tag">REST APIs</span>
+
+                        <!-- Project 2 -->
+                        <div class="modern-project-card" data-project="1">
+                            <div class="project-number">02</div>
+                            <div class="project-visual">
+                                <div class="project-image-wrapper">
+                                    <img src="project2.jpg" alt="CCX Employee Management System">
+                                    <div class="image-overlay"></div>
+                                </div>
+                                <div class="project-glow"></div>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-header">
+                                    <h3 class="project-title">CCX Employee Management</h3>
+                                    <div class="project-type">Salesforce Solution</div>
+                                </div>
+                                <p class="project-description">
+                                    Built on Force.com platform to streamline workforce management. Features include employee
+                                    information systems, attendance tracking, performance monitoring, and automated approval workflows
+                                    using Lightning Web Components.
+                                </p>
+                                <div class="project-tech-stack">
+                                    <span class="tech-badge">LWC</span>
+                                    <span class="tech-badge">Apex</span>
+                                    <span class="tech-badge">Salesforce</span>
+                                    <span class="tech-badge">Force.com</span>
+                                </div>
+                                <div class="project-actions">
+                                    <a href="#" class="project-link">
+                                        <span>View Details</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="modern-project-card" data-project="2">
+                            <div class="project-number">03</div>
+                            <div class="project-visual">
+                                <div class="project-image-wrapper">
+                                    <img src="project3.jpg" alt="JSON Derived Forms & Tables">
+                                    <div class="image-overlay"></div>
+                                </div>
+                                <div class="project-glow"></div>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-header">
+                                    <h3 class="project-title">Dynamic Forms Framework</h3>
+                                    <div class="project-type">Reusable Component Library</div>
+                                </div>
+                                <p class="project-description">
+                                    Architected a JSON-driven forms and tables framework. Enables complete form and data grid generation
+                                    from configuration with advanced features like sorting, pagination, filtering, and validation out of the box.
+                                </p>
+                                <div class="project-tech-stack">
+                                    <span class="tech-badge">Angular</span>
+                                    <span class="tech-badge">JSON</span>
+                                    <span class="tech-badge">Kendo UI</span>
+                                    <span class="tech-badge">Reactive Forms</span>
+                                </div>
+                                <div class="project-actions">
+                                    <a href="#" class="project-link">
+                                        <span>View Details</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 4 -->
+                        <div class="modern-project-card" data-project="3">
+                            <div class="project-number">04</div>
+                            <div class="project-visual">
+                                <div class="project-image-wrapper">
+                                    <img src="project4.jpg" alt="Responsive Web Applications">
+                                    <div class="image-overlay"></div>
+                                </div>
+                                <div class="project-glow"></div>
+                            </div>
+                            <div class="project-details">
+                                <div class="project-header">
+                                    <h3 class="project-title">Responsive UI Architecture</h3>
+                                    <div class="project-type">Web Application Development</div>
+                                </div>
+                                <p class="project-description">
+                                    Developed highly interactive, performance-optimized web applications using modern standards.
+                                    Implemented responsive designs with mobile-first approach, lazy loading strategies, and optimized
+                                    change detection for maximum performance.
+                                </p>
+                                <div class="project-tech-stack">
+                                    <span class="tech-badge">HTML5</span>
+                                    <span class="tech-badge">CSS3</span>
+                                    <span class="tech-badge">Bootstrap</span>
+                                    <span class="tech-badge">Performance</span>
+                                </div>
+                                <div class="project-actions">
+                                    <a href="#" class="project-link">
+                                        <span>View Details</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project2.jpg" alt="CCX Employee Management System">
-                        <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>CCX Employee Management System</h3>
-                        <p>A comprehensive software solution built on the Force.com platform. Streamlines workforce management by handling employee information, attendance, performance tracking, and HR tasks. Developed Lightning Web Components (LWC), Apex classes and triggers, and implemented email services with employee approval request workflows.</p>
-                        <div class="project-tags">
-                            <span class="tag">LWC</span>
-                            <span class="tag">Apex</span>
-                            <span class="tag">Salesforce</span>
-                            <span class="tag">Force.com</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- Right Arrow -->
+                <button class="carousel-arrow carousel-arrow-right" id="nextProject">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
 
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project3.jpg" alt="JSON Derived Forms & Tables">
-                        <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Dynamic Forms & Data Grids</h3>
-                        <p>Researched and implemented JSON-derived forms and tables framework. Created reusable components where entire forms or tables are generated dynamically from JSON configuration with all features including sorting, pagination, and filtering.</p>
-                        <div class="project-tags">
-                            <span class="tag">Angular</span>
-                            <span class="tag">JSON</span>
-                            <span class="tag">Kendo UI</span>
-                            <span class="tag">Reactive Forms</span>
-                        </div>
-                    </div>
+            <!-- Progress Indicator -->
+            <div class="carousel-progress">
+                <span class="progress-current">01</span>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
                 </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="project4.jpg" alt="Responsive Web Applications">
-                        <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Responsive UI Development</h3>
-                        <p>Developed highly interactive web applications with HTML5, CSS3, and Bootstrap. Implemented responsive designs supporting all device sizes with clarity responsive classes and media queries. Optimized applications for maximum speed with lazy loading and change detection strategies.</p>
-                        <div class="project-tags">
-                            <span class="tag">HTML5</span>
-                            <span class="tag">CSS3</span>
-                            <span class="tag">Bootstrap</span>
-                            <span class="tag">Responsive Design</span>
-                        </div>
-                    </div>
-                </div>
+                <span class="progress-total">04</span>
             </div>
         </div>
     </section>
